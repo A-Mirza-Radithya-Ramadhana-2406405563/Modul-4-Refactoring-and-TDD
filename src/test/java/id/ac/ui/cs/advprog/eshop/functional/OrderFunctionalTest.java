@@ -64,4 +64,10 @@ class OrderFunctionalTest {
 
         assertEquals("Order List", driver.getTitle());
     }
+
+    @Test
+    void paymentPage_isCorrect(ChromeDriver driver) throws Exception {
+        driver.get(baseUrl + "/order/pay/dummy-order-id");
+        assertEquals("Payment", driver.getTitle());
+    }
 }
