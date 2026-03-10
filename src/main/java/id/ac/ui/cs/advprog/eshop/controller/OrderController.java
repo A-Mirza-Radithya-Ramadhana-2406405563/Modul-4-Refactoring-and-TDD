@@ -37,20 +37,8 @@ public class OrderController {
                                   @RequestParam int quantity,
                                   @RequestParam String author,
                                   Model model) {
-        Product product = new Product();
-        product.setProductId(UUID.randomUUID().toString());
-        product.setProductName(productName);
-        product.setProductQuantity(quantity);
 
-        List<Product> products = new ArrayList<>();
-        products.add(product);
-
-        String orderId = UUID.randomUUID().toString();
-        Long orderTime = System.currentTimeMillis();
-        Order order = new Order(orderId, products, orderTime, author);
-
-        orderService.createOrder(order);
-
+        orderService.createOrderFromRequest(productName, quantity, author);
         return "redirect:/order/history";
     }
 

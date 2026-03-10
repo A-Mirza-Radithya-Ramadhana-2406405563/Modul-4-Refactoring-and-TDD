@@ -1,12 +1,15 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Order;
+import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -20,6 +23,23 @@ public class OrderServiceImpl implements OrderService {
             return order;
         }
         return null;
+    }
+
+    @Override
+    public Order createOrderFromRequest(String productName, int quantity, String author) {
+        Product product = new Product();
+        product.setProductId(UUID.randomUUID().toString());
+        product.setProductName(productName);
+        product.setProductQuantity(quantity);
+
+        List<Product> products = new ArrayList<>();
+        products.add(product);
+
+        String orderId = UUID.randomUUID().toString();
+        long orderTime = System.currentTimeMillis();
+
+        Order order = new Order(orderId, products, orderTime, author);
+        return createOrder(order); // Panggil method createOrder yang sudah ada
     }
 
     @Override
