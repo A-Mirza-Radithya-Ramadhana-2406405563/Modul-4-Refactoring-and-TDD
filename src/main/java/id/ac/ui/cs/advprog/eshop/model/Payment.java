@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import lombok.Getter;
 
 import java.util.Map;
@@ -33,45 +34,45 @@ public class Payment {
         this.order = order;
         this.method = method;
         this.paymentData = paymentData;
-        this.status = "PENDING";
+        this.status = PaymentStatus.PENDING.getValue();
     }
 
     public void cancel() {
-        if ("CANCELLED".equals(this.status)) {
+        if (PaymentStatus.CANCELLED.getValue().equals(this.status)) {
             throw new IllegalStateException("Cannot cancel a payment that is already cancelled");
         }
-        if ("ACCEPTED".equals(this.status)) {
+        if (PaymentStatus.ACCEPTED.getValue().equals(this.status)) {
             throw new IllegalStateException("Cannot cancel a payment that has been accepted");
         }
-        if ("REJECTED".equals(this.status)) {
+        if (PaymentStatus.REJECTED.getValue().equals(this.status)) {
             throw new IllegalStateException("Cannot cancel a payment that has been rejected");
         }
-        this.status = "CANCELLED";
+        this.status = PaymentStatus.CANCELLED.getValue();
     }
 
     public void accept() {
-        if ("CANCELLED".equals(this.status)) {
-            throw new IllegalStateException("Cannot accept a payment that has been cancelled");
+        if (PaymentStatus.CANCELLED.getValue().equals(this.status)) {
+            throw new IllegalStateException("Cannot accept a payment that is already cancelled");
         }
-        if ("ACCEPTED".equals(this.status)) {
-            throw new IllegalStateException("Cannot accept a payment that is already accepted");
+        if (PaymentStatus.ACCEPTED.getValue().equals(this.status)) {
+            throw new IllegalStateException("Cannot accept a payment that has been accepted");
         }
-        if ("REJECTED".equals(this.status)) {
+        if (PaymentStatus.REJECTED.getValue().equals(this.status)) {
             throw new IllegalStateException("Cannot accept a payment that has been rejected");
         }
-        this.status = "ACCEPTED";
+        this.status = PaymentStatus.ACCEPTED.getValue();
     }
 
     public void reject() {
-        if ("CANCELLED".equals(this.status)) {
-            throw new IllegalStateException("Cannot reject a payment that has been cancelled");
+        if (PaymentStatus.CANCELLED.getValue().equals(this.status)) {
+            throw new IllegalStateException("Cannot reject a payment that is already cancelled");
         }
-        if ("ACCEPTED".equals(this.status)) {
-            throw new IllegalStateException("Cannot reject a payment that is already accepted");
+        if (PaymentStatus.ACCEPTED.getValue().equals(this.status)) {
+            throw new IllegalStateException("Cannot reject a payment that has been accepted");
         }
-        if ("REJECTED".equals(this.status)) {
+        if (PaymentStatus.REJECTED.getValue().equals(this.status)) {
             throw new IllegalStateException("Cannot reject a payment that has been rejected");
         }
-        this.status = "REJECTED";
+        this.status = PaymentStatus.REJECTED.getValue();
     }
 }
