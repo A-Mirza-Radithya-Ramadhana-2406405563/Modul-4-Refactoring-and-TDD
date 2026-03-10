@@ -26,21 +26,3 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deploy:
-    name: Deploy to Koyeb
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Koyeb CLI
-        run: |
-          curl -L https://github.com/koyeb/koyeb-cli/releases/download/v5.9.1/koyeb-cli_5.9.1_linux_amd64.tar.gz -o koyeb.tar.gz
-          tar -xzf koyeb.tar.gz
-          chmod +x koyeb
-
-      - name: Redeploy service
-        run: ./koyeb services redeploy thick-sandy/modul-2-ci-cd-devops --token ${{ secrets.KOYEB_TOKEN }}
