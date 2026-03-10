@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+</head>
+<body>
+<h1>Payment</h1>
+<div th:if="${order != null}">
+    <p>Order ID: <span th:text="${order.id}"></span></p>
+    <p>Author: <span th:text="${order.author}"></span></p>
+
+    <form method="post" th:action="@{/order/pay/{id}(id=${order.id})}">
+        <label>Payment Method:</label>
+        <select name="method" id="method" onchange="toggleFields()">
+            <option value="VOUCHER">Voucher</option>
+            <option value="COD">Cash on Delivery</option>
+        </select><br><br>
+
+        <div id="voucherFields">
+            <label>Voucher Code:</label>
+            <input type="text" name="voucherCode"><br>
+        </div>
+
+        <div id="codFields" style="display:none;">
+            <label>Address:</label>
+            <input type="text" name="address"><br>
+            <label>Delivery Fee:</label>
+            <input type="text" name="deliveryFee"><br>
+        </div>
+
+        <button type="submit">Pay</button>
+    </form>
+</div>
+
+<div th:if="${order == null}">
+    <p>Order not found.</p>
+</div>
+
+<script>
+    function toggleFields() {
+        var method = document.getElementById('method').value;
+        if (method === 'VOUCHER') {
+            document.getElementById('voucherFields').style.display = 'block';
+            document.getElementById('codFields').style.display = 'none';
+        } else {
+            document.getElementById('voucherFields').style.display = 'none';
+            document.getElementById('codFields').style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>
